@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+				 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.6.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	
+	<groupId>com.huzhihui</groupId>
+	<artifactId>springboot-flowable</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<modules>
+		<module>flowable-web</module>
+	</modules>
+	<packaging>pom</packaging>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<springboot.version>2.1.6.RELEASE</springboot.version>
+		<mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
+		<shiro.spring.version>1.4.1</shiro.spring.version>
+		<mysql.version>8.0.16</mysql.version>
+		<lombok.version>1.18.8</lombok.version>
+		<pagehelper.version>1.2.12</pagehelper.version>
+		<fastjson.version>1.2.59</fastjson.version>
+		<nekohtml.version>1.9.21</nekohtml.version>
+		<aliyun-sdk-oss.version>3.6.0</aliyun-sdk-oss.version>
+		<aliyun-java-sdk-oss.version>4.0.3</aliyun-java-sdk-oss.version>
+		<weixin-java.version>3.5.0</weixin-java.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<!-- Import dependency management from Spring Boot -->
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${springboot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+
+
+		</dependencies>
+	</dependencyManagement>
+
+</project>

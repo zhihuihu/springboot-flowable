@@ -1,0 +1,31 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.137.100:3306/spring_boot_flowable?characterEncoding=UTF-8
+    username: root
+    password: Root@123
+
+flowable:
+  rest:
+    app:
+      authentication-mode: verify-privilege
+  common:
+    app:
+      idm-admin:
+        password: test
+        user: admin
+      role-prefix:
+      idm-url: http://localhost:8081/flowable-idm
+  modeler:
+    app:
+      rest-enabled: true
+      deployment-api-url: http://localhost:8081/flowable-task/app-api
+
+type: modeler
+version:
+  minor: 4
+  major: 6
+  edition: Flowable
+  revision: 2
