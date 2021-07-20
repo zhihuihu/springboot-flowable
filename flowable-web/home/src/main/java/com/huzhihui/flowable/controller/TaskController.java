@@ -7,12 +7,14 @@ package com.huzhihui.flowable.controller;
 import com.huzhihui.flowable.utils.ResponseMessage;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.engine.*;
+import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,7 +43,13 @@ public class TaskController {
     private RepositoryService repositoryService;
     @Autowired
     private ProcessEngine processEngine;
+    @Autowired
+    private HistoryService historyService;
 
+    /**
+     * 流程部署
+     * @return
+     */
     @RequestMapping(value = "/deploy")
     public ResponseMessage<Deployment> deploy(){
         RepositoryService repositoryService = processEngine.getRepositoryService();
@@ -51,6 +59,11 @@ public class TaskController {
         return ResponseMessage.success(deployment);
     }
 
+    /**
+     * 任务列表查询
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/list")
     public ResponseMessage<List<Task>> list(String userId) {
         List<Task> tasks = taskService.createTaskQuery().taskAssignee(userId).orderByTaskCreateTime().desc().list();
@@ -60,6 +73,12 @@ public class TaskController {
         return ResponseMessage.success(tasks);
     }
 
+    /**
+     * 查看当前任务流程图
+     * @param response
+     * @param taskId
+     * @throws Exception
+     */
     @RequestMapping(value = "queryProcessDiagram")
     public void queryProcessDiagram(HttpServletResponse response,String taskId) throws Exception{
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(taskId).singleResult();
@@ -104,6 +123,23 @@ public class TaskController {
                 out.close();
             }
         }
+    }
+
+    /**
+     * 我发起的流程实例列表
+     *
+     * @param userId
+     * @return 流程实例列表
+     */
+    @GetMapping("queryStartProcess")
+    public List<HistoricProcessInstance> queryStartProcess(String userId) {
+        List<HistoricProcessInstance> list = historyService
+                .createHistoricProcessInstanceQuery()
+                .startedBy(userId)
+                .orderByProcessInstanceStartTime()
+                .asc()
+                .list();
+        return list;
     }
 
 
